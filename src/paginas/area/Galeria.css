@@ -44,7 +44,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
   gap: var(--espaco-4);
 }
 
@@ -90,9 +90,75 @@
   color: var(--cor-texto-suave);
 }
 
-.cartao__acao {
-  align-self: flex-start;
+/* Onde editar: Front / Back / DW, cada um com Copiar */
+.caminhos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: var(--espaco-1) 0 0;
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie-suave);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+}
+
+.caminho {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--espaco-2);
+}
+
+.caminho__rotulo {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-suave);
+}
+
+.caminho__valor {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto; /* caminho | Copiar */
+  align-items: baseline;
+  gap: 0 var(--espaco-3);
+  min-width: 0;
+}
+
+.caminho__valor code {
+  overflow-wrap: anywhere; /* caminho longo quebra a linha em vez de sumir */
+  color: var(--cor-texto);
+}
+
+.caminho__copiar {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-medio);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.caminho__ajuda {
+  grid-column: 1 / -1;
+  color: var(--cor-texto-suave);
+}
+
+.cartao__rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2) var(--espaco-3);
   margin-top: var(--espaco-2);
+}
+
+.cartao__acao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  align-self: flex-start;
   padding: var(--espaco-2) var(--espaco-4);
   border-radius: var(--raio-sm);
   background: var(--cor-lateral);
@@ -107,7 +173,6 @@
 }
 
 .cartao__aviso {
-  margin-top: var(--espaco-2);
   font-size: var(--text-xs);
   color: var(--cor-texto-suave);
 }

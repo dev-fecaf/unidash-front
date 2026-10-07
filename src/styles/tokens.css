@@ -28,6 +28,11 @@
   /* Selo "Administração" na barra lateral da área do time de dados (só estrutura) */
   --cor-lateral-administracao: #FFC83D;  /* amarelo: 12,4:1 sobre a lateral */
 
+  /* Quadradinho do ícone dos indicadores (Início). O verde da marca some neste fundo (1,3:1),
+     por isso o ícone fica escuro. */
+  --cor-indicador-icone-fundo: #DEE2E9;
+  --cor-indicador-icone: #102E33;        /* 11,1:1 sobre o fundo do ícone */
+
   /* ---- Texto ---- */
   --cor-texto: #1A2233;                /* 14,7:1 sobre o fundo */
   --cor-texto-suave: #566072;          /* 5,9:1 sobre o fundo; metadados, legendas */

@@ -1,5 +1,6 @@
-// Embaixo do campo Nome, em tempo real: "No banco: <identificador>" e, numa segunda linha,
-// a pasta do dashboard no front e o schema no DW (que usam o mesmo identificador).
+// Embaixo do campo Nome, em tempo real: "No banco: <identificador>" e, embaixo, onde editar o
+// dashboard (pasta no front, endpoints no back, schema no DW), que usam o mesmo identificador
+// (convenção em src/dashboards/caminhos.js).
 //
 // - Dashboard novo: o identificador é calculado na hora (mesma regra do back) e, logo depois,
 //   confirmado pelo back, que acrescenta _2, _3... se já existir um igual.
@@ -9,6 +10,7 @@
 import { useEffect, useState } from 'react'
 
 import { obter } from '../../../api/cliente.js'
+import { caminhoBack, caminhoFront, schemaDw } from '../../../dashboards/caminhos.js'
 import { gerarSlug } from './identificador.js'
 
 export default function PreviaNome({ nome, slugFixo }) {
@@ -43,9 +45,12 @@ export default function PreviaNome({ nome, slugFixo }) {
         {ganhouSufixo && <span className="identificador__nota">já existia um igual, por isso o final {slug.slice(local.length)}</span>}
       </p>
       <p className="identificador__linha">
-        <span>Pasta:</span> <code>src/dashboards/{slug}/</code>
+        <span>Front:</span> <code>unidash-front/{caminhoFront(slug)}</code>
+      </p>
+      <p className="identificador__linha">
+        <span>Back (endpoints):</span> <code>unidash-back/{caminhoBack(slug)}</code>
         <span className="identificador__separador" aria-hidden="true">·</span>
-        <span>Schema no DW:</span> <code>dash_{slug}</code>
+        <span>DW:</span> <code>{schemaDw(slug)}</code>
       </p>
     </div>
   )

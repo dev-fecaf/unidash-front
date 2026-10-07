@@ -1,5 +1,6 @@
-// Tela Dashboards (a "galeria"): os dashboards cadastrados no banco, agrupados por categoria, com pré-visualização.
-// A pré-visualização só existe para quem já tem configuração no front (src/dashboards/<nome>/).
+// Tela Dashboards (a "galeria"): os dashboards cadastrados no banco, agrupados por categoria.
+// Cada cartão mostra onde editar o dashboard (pasta no front, endpoints no back, schema no DW;
+// convenção em src/dashboards/caminhos.js) e o botão de pré-visualização (nome e páginas do banco, em qualquer status).
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -7,10 +8,54 @@ import { Link } from 'react-router-dom'
 import { obter } from '../../api/cliente.js'
 import Selo from '../../componentes/Selo.jsx'
 import { buscarDashboard, listarDashboardsDoCodigo } from '../../dashboards/registro.js'
+import Icone from '../../componentes/Icone.jsx'
+import { caminhoBack, caminhoFront, rotaDados, schemaDw } from '../../dashboards/caminhos.js'
 import { useSessao } from '../../sessao/Sessao.jsx'
 import './Galeria.css'
 
 const formatarData = (iso) => new Intl.DateTimeFormat('pt-BR').format(new Date(iso))
+
+// Um caminho com botão de copiar
+function Copiavel({ rotulo, valor, ajuda }) {
+  const [copiado, setCopiado] = useState(false)
+
+  async function copiar() {
+    try {
+      await navigator.clipboard.writeText(valor)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    } catch {
+      setCopiado(false)
+    }
+  }
+
+  return (
+    <div className="caminho">
+      <dt className="caminho__rotulo">{rotulo}</dt>
+      <dd className="caminho__valor">
+        <code>{valor}</code>
+        <button type="button" className="caminho__copiar" onClick={copiar} aria-label={`Copiar ${valor}`}>
+          {copiado ? 'Copiado' : 'Copiar'}
+        </button>
+        {ajuda && <span className="caminho__ajuda">{ajuda}</span>}
+        <span className="visualmente-oculto" aria-live="polite">
+          {copiado ? `${rotulo} copiado` : ''}
+        </span>
+      </dd>
+    </div>
+  )
+}
+
+// Onde mexer no dashboard: front (gráficos), back (endpoints) e DW (dados)
+function Caminhos({ slug }) {
+  return (
+    <dl className="caminhos" aria-label="Onde editar este dashboard">
+      <Copiavel rotulo="Front" valor={caminhoFront(slug)} ajuda="unidash-front · gráficos, filtros e o endpoint de cada gráfico" />
+      <Copiavel rotulo="Back" valor={caminhoBack(slug)} ajuda={`unidash-back · endpoints de dados (rota ${rotaDados(slug)}…)`} />
+      <Copiavel rotulo="DW" valor={schemaDw(slug)} ajuda="schema com as tabelas do dashboard" />
+    </dl>
+  )
+}
 
 function agruparPorCategoria(dashboards) {
   const grupos = new Map()
@@ -22,7 +67,7 @@ function agruparPorCategoria(dashboards) {
 }
 
 function CartaoDashboard({ dashboard }) {
-  const temConfiguracao = Boolean(buscarDashboard(dashboard.hash))
+  const temConfiguracao = Boolean(buscarDashboard(dashboard.hash))  // gráficos já configurados no código
   return (
     <li className="cartao">
       <div className="cartao__cabecalho">
@@ -34,13 +79,14 @@ function CartaoDashboard({ dashboard }) {
         {dashboard.paginas} {dashboard.paginas === 1 ? 'página' : 'páginas'} · atualizado em{' '}
         {formatarData(dashboard.atualizado_em)}
       </p>
-      {temConfiguracao ? (
+      <Caminhos slug={dashboard.slug} />
+      <div className="cartao__rodape">
         <Link className="cartao__acao" to={`/area/dashboards/${dashboard.hash}`}>
+          <Icone nome="acessos" tamanho={16} />
           Pré-visualizar
         </Link>
-      ) : (
-        <span className="cartao__aviso">Ainda sem configuração no front</span>
-      )}
+        {!temConfiguracao && <span className="cartao__aviso">Sem gráficos ainda: a prévia mostra a estrutura</span>}
+      </div>
     </li>
   )
 }

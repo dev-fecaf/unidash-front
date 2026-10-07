@@ -21,3 +21,27 @@
     padding-inline: var(--espaco-4);
   }
 }
+
+.faixa-previa__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2) var(--espaco-3);
+}
+
+.faixa-previa__pasta {
+  color: var(--cor-texto-suave);
+}
+
+.faixa-previa__pasta code {
+  color: var(--cor-texto);
+}
+
+.previa__mensagem {
+  padding: var(--espaco-6);
+  color: var(--cor-texto-suave);
+}
+
+.previa__mensagem p {
+  margin: 0 0 var(--espaco-3);
+}

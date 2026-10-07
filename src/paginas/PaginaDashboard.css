@@ -18,6 +18,20 @@
   color: var(--cor-texto-suave);
 }
 
+.pagina__preparo p,
+.pagina__preparo ul {
+  margin: 0;
+}
+
+.pagina__preparo ul {
+  margin-top: var(--espaco-2);
+  padding-left: var(--espaco-5);
+}
+
+.pagina__preparo li + li {
+  margin-top: var(--espaco-1);
+}
+
 .pagina__filtros {
   margin-bottom: var(--espaco-5);
 }
