@@ -10,9 +10,9 @@
 
 :root {
   /* ---- Estrutura ---- */
-  --cor-lateral: #121A2B;              /* barra lateral esquerda */
-  --cor-lateral-texto: #FFFFFF;        /* 17,4:1 sobre a lateral */
-  --cor-lateral-texto-suave: #AEB6C6;  /* 8,5:1 sobre a lateral */
+  --cor-lateral: #0B0F1A;              /* barra lateral esquerda (trocada de #121A2B em 07/10/2026) */
+  --cor-lateral-texto: #FFFFFF;        /* 19,1:1 sobre a lateral */
+  --cor-lateral-texto-suave: #AEB6C6;  /* 9,4:1 sobre a lateral */
   --cor-fundo: #F5F6F8;                /* fundo dos dashboards */
   --cor-superficie: #FFFFFF;           /* cards, gráficos, tabelas */
   --cor-borda: #DDE1E8;
@@ -23,10 +23,10 @@
   /* Marcador da página ativa na barra lateral (só estrutura, nunca cor de dado).
      O verde NÃO serve como texto em fundo claro (1,7:1 sobre branco). */
   --cor-lateral-ativo-fundo: #102E33;  /* texto branco por cima: 14,4:1 */
-  --cor-lateral-ativo-marcador: #00E375; /* faixa verde: 10,1:1 sobre a lateral */
+  --cor-lateral-ativo-marcador: #00E375; /* faixa verde: 11,2:1 sobre a lateral */
 
   /* Selo "Administração" na barra lateral da área do time de dados (só estrutura) */
-  --cor-lateral-administracao: #FFC83D;  /* amarelo: 11,2:1 sobre a lateral */
+  --cor-lateral-administracao: #FFC83D;  /* amarelo: 12,4:1 sobre a lateral */
 
   /* ---- Texto ---- */
   --cor-texto: #1A2233;                /* 14,7:1 sobre o fundo */

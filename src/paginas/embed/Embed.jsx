@@ -22,6 +22,7 @@ import AvisoEmbed from './AvisoEmbed.jsx'
 import '../PaginaDashboard.css'
 
 const ESPERA_MAXIMA_TOKEN = 15000 // ms sem resposta do Hub até mostrar a mensagem neutra
+const INTERVALO_PEDIDO = 2000 // repete o "embed:ready" a cada 2 s (caso o Hub comece a ouvir depois)
 const MENSAGEM_NEUTRA = 'Não foi possível validar o acesso a este dashboard. Recarregue a página e tente novamente.'
 
 // Mensagens de cada situação (o back decide a situação; a tela só mostra)
@@ -42,6 +43,11 @@ const avisar = (...partes) => console.warn('[UniDash embed]', ...partes)
 let tokenAdiantado = null
 if (typeof window !== 'undefined' && EMBED_HUB_ORIGIN) {
   window.addEventListener('message', (evento) => {
+    // Diagnóstico: toda mensagem vinda de fora aparece no console (só origem e tipo, nunca o token)
+    if (evento.origin !== window.location.origin) {
+      const tipo = evento.data && typeof evento.data === 'object' ? evento.data.type : typeof evento.data
+      console.info('[UniDash embed] mensagem recebida de', evento.origin, '· type:', tipo)
+    }
     if (evento.origin === EMBED_HUB_ORIGIN && evento.data?.type === 'hub:token' && typeof evento.data.token === 'string') {
       tokenAdiantado = evento.data.token
     }
@@ -81,6 +87,7 @@ export default function Embed() {
       }
       tokenAdiantado = null
       clearTimeout(limite)
+      clearInterval(repeticao)
       try {
         const resposta = await enviar('/embed/entrar', { hash, token: evento.data.token })
         if (resposta.situacao !== 'liberado') {
@@ -103,14 +110,18 @@ export default function Embed() {
 
     window.addEventListener('message', aoReceber)
     const limite = setTimeout(() => {
+      clearInterval(repeticao)
       avisar('nenhum token do Hub em', ESPERA_MAXIMA_TOKEN / 1000, 's (o Hub respondeu ao "embed:ready"?)')
       setEstado((atual) => (atual.fase === 'aguardando' ? { fase: 'erro' } : atual))
     }, ESPERA_MAXIMA_TOKEN)
+    let repeticao = null
     if (tokenAdiantado) {
       aoReceber({ origin: EMBED_HUB_ORIGIN, data: { type: 'hub:token', token: tokenAdiantado } })
     } else {
       pedirToken('embed:ready')
       console.info('[UniDash embed] "embed:ready" enviado para', EMBED_HUB_ORIGIN)
+      // Se o Hub ainda não estava ouvindo, o pedido se perde: repete até o token chegar (ou o limite)
+      repeticao = setInterval(() => pedirToken('embed:ready'), INTERVALO_PEDIDO)
     }
 
     // Limpeza: ao sair da página, para de ouvir o Hub e cancela os relógios
@@ -118,6 +129,7 @@ export default function Embed() {
       window.removeEventListener('message', aoReceber)
       clearTimeout(renovacao)
       clearTimeout(limite)
+      clearInterval(repeticao)
     }
   }, [hash])
 
