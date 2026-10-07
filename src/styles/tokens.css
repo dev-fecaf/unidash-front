@@ -25,6 +25,11 @@
   --cor-lateral-ativo-fundo: #102E33;  /* texto branco por cima: 14,4:1 */
   --cor-lateral-ativo-marcador: #00E375; /* faixa verde: 11,2:1 sobre a lateral */
 
+  /* Página/tela selecionada na barra lateral (desde 07/10/2026, no lugar do verde):
+     branco levemente transparente por cima da lateral, com faixa branca. Texto branco: ~15:1 */
+  --cor-lateral-selecionado-fundo: rgba(255, 255, 255, 0.1);
+  --cor-lateral-selecionado-marcador: rgba(255, 255, 255, 0.85);
+
   /* Selo "Administração" na barra lateral da área do time de dados (só estrutura) */
   --cor-lateral-administracao: #FFC83D;  /* amarelo: 12,4:1 sobre a lateral */
 

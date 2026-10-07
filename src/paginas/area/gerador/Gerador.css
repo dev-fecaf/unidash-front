@@ -686,8 +686,8 @@
 }
 
 .previa-lateral__ativa {
-  background: var(--cor-lateral-ativo-fundo);
-  box-shadow: inset 1px 0 0 var(--cor-lateral-ativo-marcador);
+  background: var(--cor-lateral-selecionado-fundo);
+  box-shadow: inset 1px 0 0 var(--cor-lateral-selecionado-marcador);
   color: var(--cor-lateral-texto);
 }
 

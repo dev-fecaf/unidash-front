@@ -146,8 +146,8 @@
   width: 32px;
   height: 32px;
   border-radius: var(--raio-sm);
-  background: var(--cor-lateral-ativo-fundo);
-  color: var(--cor-lateral-ativo-marcador);
+  background: var(--cor-indicador-icone-fundo); /* mesmo padrão dos indicadores */
+  color: var(--cor-indicador-icone);
 }
 
 .ranking__titulo {

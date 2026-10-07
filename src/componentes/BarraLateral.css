@@ -134,10 +134,10 @@
    é o que marca a página ativa. */
 .lateral__pagina--ativa,
 .lateral__pagina--ativa:hover {
-  background: var(--cor-lateral-ativo-fundo);
+  background: var(--cor-lateral-selecionado-fundo);
   color: var(--cor-lateral-texto);
   font-weight: var(--peso-medio);
-  box-shadow: inset 1px 0 0 var(--cor-lateral-ativo-marcador);
+  box-shadow: inset 1px 0 0 var(--cor-lateral-selecionado-marcador);
 }
 
 /* ---- Rodapé: Abrir chamado ---- */
