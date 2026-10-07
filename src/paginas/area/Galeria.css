@@ -1,0 +1,113 @@
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+}
+
+.galeria__mensagem {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.galeria__mensagem--erro {
+  color: var(--cor-negativo);
+}
+
+.galeria__vazia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding: var(--espaco-6);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+}
+
+.galeria__vazia p {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.galeria__categoria {
+  margin-bottom: var(--espaco-3);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+
+.galeria__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--espaco-4);
+}
+
+/* ---- Cartão de um dashboard ---- */
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-card);
+}
+
+.cartao--exemplo {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.cartao__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.cartao__nome {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-lh);
+}
+
+.cartao__descricao {
+  margin: 0;
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--cor-texto-suave);
+}
+
+.cartao__meta {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
+}
+
+.cartao__acao {
+  align-self: flex-start;
+  margin-top: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-4);
+  border-radius: var(--raio-sm);
+  background: var(--cor-lateral);
+  color: var(--cor-lateral-texto);
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+}
+
+.cartao__acao:hover {
+  background: var(--cor-lateral-ativo-fundo);
+}
+
+.cartao__aviso {
+  margin-top: var(--espaco-2);
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
+}

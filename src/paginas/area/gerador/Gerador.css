@@ -1,0 +1,902 @@
+/* Telas do Gerador: tabela, formulário (no painel lateral) e categorias.
+   Linha visual: sóbria, de ferramenta de trabalho. Linhas finas em vez de sombras pesadas,
+   cores da marca só nas ações principais, nada de degradês ou enfeites. */
+
+.gerador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.gerador--painel {
+  gap: 0;
+}
+
+.gerador__mensagem {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.gerador__voltar {
+  align-self: flex-start;
+  color: var(--cor-texto-suave);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.gerador__voltar:hover {
+  color: var(--cor-texto);
+}
+
+/* Busca com lupa dentro do campo */
+.busca {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--cor-texto-suave);
+}
+
+.busca > svg {
+  position: absolute;
+  left: 12px;
+  pointer-events: none;
+}
+
+.busca__entrada {
+  width: 260px;
+  min-height: 36px;
+  padding: 0 var(--espaco-3) 0 36px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.busca__entrada:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 0;
+  border-color: var(--cor-foco);
+}
+
+.cartao-gerador {
+  padding: var(--espaco-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+}
+
+/* ---- Botões ---- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  min-height: 38px;
+  padding: 0 var(--espaco-4);
+  border: 1px solid transparent;
+  border-radius: 999px; /* pílula: mesmo formato do seletor e da busca */
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.botao:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.botao--primario {
+  background: var(--cor-lateral-ativo-fundo); /* #102E33; texto branco 14,4:1 */
+  color: var(--cor-lateral-texto);
+}
+
+.botao--primario:hover:not(:disabled) {
+  background: var(--cor-lateral);
+}
+
+/* Ação de destaque da tela (ex.: "Novo dashboard"): o ícone vai num círculo verde da marca */
+.botao--destaque {
+  padding-left: 6px;
+}
+
+.botao__circulo {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--cor-lateral-ativo-marcador); /* verde #00E375 */
+  color: var(--cor-lateral-ativo-fundo); /* + escuro: 8,4:1 sobre o verde */
+}
+
+.botao--secundario {
+  border-color: var(--cor-borda);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+.botao--secundario:hover:not(:disabled) {
+  border-color: var(--cor-borda-forte);
+  background: var(--cor-fundo);
+}
+
+/* Fantasma: sem fundo nem borda até passar o mouse */
+.botao--fantasma {
+  background: transparent;
+  color: var(--cor-texto);
+}
+
+.botao--fantasma:hover:not(:disabled) {
+  background: var(--cor-grade);
+}
+
+.botao--pequeno {
+  min-height: 30px;
+  padding: 0 var(--espaco-3);
+  font-size: var(--text-xs);
+}
+
+.botao-icone {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-suave);
+  font: inherit;
+  cursor: pointer;
+}
+
+.botao-icone:hover:not(:disabled) {
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+.botao-icone:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.botao-icone--fantasma {
+  border-color: transparent;
+  background: transparent;
+}
+
+.botao-icone--fantasma:hover:not(:disabled) {
+  background: var(--cor-grade);
+}
+
+.botao-icone--remover:hover:not(:disabled) {
+  color: var(--cor-negativo);
+}
+
+/* Busca dentro da tabela: fundo cinza claro preenchido, arredondada e da mesma altura do seletor ao lado.
+   Ao clicar para digitar, fica branca com a borda de foco. */
+.busca--discreta .busca__entrada {
+  width: 240px;
+  height: 40px;
+  border-color: transparent;
+  border-radius: 999px;
+  background: var(--cor-fundo);
+}
+
+.busca--discreta .busca__entrada::placeholder {
+  color: var(--cor-texto-suave); /* 5,9:1 sobre o fundo cinza (o tom padrão ficaria abaixo de 4,5:1) */
+}
+
+.busca--discreta .busca__entrada:hover {
+  border-color: var(--cor-borda);
+}
+
+.busca--discreta .busca__entrada:focus-visible {
+  background: var(--cor-superficie);
+}
+
+/* ---- Tabela de dashboards ---- */
+.tabela-moldura {
+  overflow-x: auto;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+}
+
+/* Faixa de filtros no topo da tabela */
+.tabela__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+/* Dentro da tabela, o seletor dispensa a sombra (a moldura já separa) */
+.tabela__barra .seletor-opcoes {
+  box-shadow: 0 0 0 1px var(--cor-borda);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.tabela th {
+  padding: var(--espaco-3) var(--espaco-4);
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-superficie-suave);
+  color: var(--cor-texto-suave);
+  font-size: var(--text-xs);
+  font-weight: var(--peso-semibold);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tabela td {
+  padding: var(--espaco-3) var(--espaco-4);
+  border-bottom: 1px solid var(--cor-borda);
+  vertical-align: middle;
+}
+
+.tabela tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabela tbody tr:hover {
+  background: var(--cor-superficie-suave);
+}
+
+.tabela__nome {
+  display: block;
+  font-weight: var(--peso-semibold);
+  color: var(--cor-texto);
+}
+
+.tabela__sub {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
+}
+
+.tabela__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabela th.tabela__numero {
+  text-align: right;
+}
+
+.tabela__data {
+  white-space: nowrap; /* data e hora numa linha só */
+}
+
+.tabela__suave {
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+}
+
+.tabela__responsavel {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tabela__acoes {
+  width: 48px;
+  text-align: right;
+}
+
+/* O lápis fica discreto e ganha força ao passar o mouse na linha (ou ao focar pelo teclado) */
+.tabela__acoes .botao-icone {
+  opacity: 0.55;
+}
+
+.tabela tbody tr:hover .tabela__acoes .botao-icone,
+.tabela__acoes .botao-icone:focus-visible {
+  opacity: 1;
+  color: var(--cor-texto);
+}
+
+.tabela__vazia {
+  padding: var(--espaco-7) var(--espaco-4);
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: var(--text-sm);
+}
+
+.tabela__vazia p {
+  margin: 0;
+}
+
+.tabela__vazia-titulo {
+  margin-bottom: var(--espaco-1) !important;
+  color: var(--cor-texto);
+  font-weight: var(--peso-semibold);
+}
+
+/* ---- Formulário (no painel) ---- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario__secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding: var(--espaco-5) 0;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.formulario__secao:first-child {
+  padding-top: 0;
+}
+
+/* Cabeçalho da seção: número do passo, título e (opcional) uma frase curta embaixo */
+.formulario__secao-cabecalho {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  column-gap: var(--espaco-3);
+  align-items: center;
+}
+
+.formulario__passo {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cor-lateral-ativo-fundo);
+  color: var(--cor-lateral-texto);
+  font-size: var(--text-xs);
+  font-weight: var(--peso-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.formulario__secao-cabecalho h3 {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-lh);
+  font-weight: var(--peso-semibold);
+}
+
+.formulario__secao-cabecalho p {
+  grid-column: 2;
+  margin: 2px 0 0;
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
+}
+
+/* O conteúdo da seção fica alinhado com o título (depois do número) */
+.formulario__secao > :not(.formulario__secao-cabecalho) {
+  margin-left: calc(24px + var(--espaco-3));
+}
+
+/* Rodapé fixo no fim do painel: os botões ficam sempre à vista */
+.formulario__rodape {
+  position: sticky;
+  bottom: calc(-1 * var(--espaco-5));
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+  margin: var(--espaco-4) calc(-1 * var(--espaco-5)) calc(-1 * var(--espaco-5));
+  padding: var(--espaco-3) var(--espaco-5);
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+.formulario > .mensagem {
+  margin-top: var(--espaco-4);
+}
+
+/* Seção Publicação: seletor e, embaixo, a explicação do status escolhido */
+.publicacao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.publicacao__explicacao {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: var(--text-sm);
+}
+
+.publicacao__explicacao strong {
+  color: var(--cor-texto);
+  font-weight: var(--peso-semibold);
+}
+
+/* ---- Campos ---- */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.campo__rotulo {
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto);
+}
+
+.campo__opcional {
+  margin-left: var(--espaco-1);
+  font-size: var(--text-xs);
+  font-weight: var(--peso-regular);
+  color: var(--cor-texto-suave);
+}
+
+.campo__entrada {
+  min-height: 38px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font: inherit;
+  font-size: var(--text-sm);
+  transition: border-color 0.12s ease;
+}
+
+.campo__entrada::placeholder {
+  color: var(--cor-texto-exemplo);
+}
+
+.campo__entrada:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.campo__entrada:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 0;
+  border-color: var(--cor-foco);
+}
+
+.campo__entrada[aria-invalid='true'] {
+  border-color: var(--cor-negativo);
+}
+
+.campo__entrada--texto {
+  resize: vertical;
+  line-height: var(--text-md-lh);
+}
+
+.campo__ajuda {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
+}
+
+/* Rótulo com o "i" de explicação ao lado */
+.campo__rotulo-linha {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+/* "No banco: identificador" + pasta e schema, embaixo do campo Nome */
+.identificador {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--cor-texto-suave);
+  font-size: var(--text-xs);
+}
+
+.identificador__linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.identificador__separador {
+  margin: 0 2px;
+}
+
+.identificador code {
+  padding: 1px 6px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 4px;
+  background: var(--cor-superficie-suave);
+  color: var(--cor-texto);
+}
+
+.identificador__nota::before {
+  content: '·';
+  margin-right: 6px;
+}
+
+.campo__erro {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--peso-medio);
+  color: var(--cor-negativo);
+}
+
+/* ---- Mensagens (sucesso, atenção, erro) ---- */
+.mensagem {
+  margin: 0;
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 1px solid var(--cor-borda);
+  border-left-width: 3px;
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie);
+  font-size: var(--text-sm);
+}
+
+.mensagem p {
+  margin: 0;
+}
+
+.mensagem--sucesso {
+  border-left-color: var(--cor-positivo);
+  color: var(--cor-positivo);
+  font-weight: var(--peso-medio);
+}
+
+.mensagem--atencao {
+  border-color: var(--cor-atencao-borda);
+  border-left-color: var(--cor-atencao);
+  background: var(--cor-atencao-fundo);
+  color: var(--cor-texto);
+}
+
+.mensagem--erro {
+  border-left-color: var(--cor-negativo);
+  color: var(--cor-negativo);
+}
+
+.mensagem__codigo {
+  color: var(--cor-texto-suave);
+  font-size: var(--text-xs);
+}
+
+.gerador--painel > .mensagem {
+  margin-bottom: var(--espaco-4);
+}
+
+/* ---- Categoria nova (no formulário e na tela de categorias) ---- */
+.categoria-nova {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.categoria-nova .campo__entrada {
+  flex: 1;
+  min-width: 200px;
+}
+
+.categoria-nova__erro {
+  flex-basis: 100%;
+}
+
+/* ---- Editor de páginas ---- */
+/* Lista à esquerda, prévia pequena da barra lateral à direita */
+.paginas__corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: var(--espaco-4);
+  align-items: start;
+}
+
+.paginas__edicao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  min-width: 0;
+}
+
+/* Pegador para arrastar */
+.paginas__pegador {
+  flex-shrink: 0;
+  width: 20px;
+  color: var(--cor-texto-exemplo);
+  font-size: var(--text-sm);
+  letter-spacing: -2px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+}
+
+.paginas__pegador:active {
+  cursor: grabbing;
+}
+
+.paginas__item--arrastando {
+  opacity: 0.45;
+}
+
+/* Linha onde a página arrastada vai cair */
+.paginas__item--alvo {
+  box-shadow: 0 -2px 0 var(--cor-lateral-ativo-fundo);
+}
+
+/* Miniatura da barra lateral do dashboard (só visual) */
+.previa-lateral {
+  padding: var(--espaco-2);
+  border-radius: var(--raio-sm);
+  background: var(--cor-lateral);
+  color: var(--cor-lateral-texto-suave);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.previa-lateral__topo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--cor-lateral-texto);
+  font-weight: var(--peso-semibold);
+}
+
+.previa-lateral__topo span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.previa-lateral__rotulo {
+  margin: 6px 0 4px;
+  font-size: 9px;
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.previa-lateral ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.previa-lateral li {
+  overflow: hidden;
+  padding: 3px 6px;
+  border-radius: 3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.previa-lateral__ativa {
+  background: var(--cor-lateral-ativo-fundo);
+  box-shadow: inset 1px 0 0 var(--cor-lateral-ativo-marcador);
+  color: var(--cor-lateral-texto);
+}
+
+.previa-lateral__vazia {
+  margin: 0;
+  font-style: italic;
+}
+
+.paginas__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.paginas__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1);
+}
+
+.paginas__item .campo__entrada {
+  flex: 1;
+  margin-right: var(--espaco-1);
+}
+
+
+/* Botões ↑ ↓ ✕ das páginas: sem borda e só aparecem ao passar o mouse na linha
+   ou ao chegar nela pelo teclado (continuam acessíveis: só ficam invisíveis em repouso) */
+.paginas__item .botao-icone {
+  border-color: transparent;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.paginas__item:hover .botao-icone,
+.paginas__item:focus-within .botao-icone {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .paginas__item .botao-icone {
+    opacity: 1; /* em tela de toque não existe "passar o mouse" */
+  }
+}
+
+.paginas__item .botao-icone:hover:not(:disabled) {
+  background: var(--cor-grade);
+}
+
+.paginas__adicionar {
+  align-self: flex-start;
+  margin-left: 22px;
+  color: var(--cor-texto-suave);
+}
+
+.paginas__adicionar:hover:not(:disabled) {
+  color: var(--cor-texto);
+}
+
+.paginas__desativadas {
+  font-size: var(--text-sm);
+  color: var(--cor-texto-suave);
+}
+
+.paginas__desativadas summary {
+  cursor: pointer;
+}
+
+.paginas__desativadas ul {
+  list-style: none;
+  margin: var(--espaco-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.paginas__desativadas li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+/* ---- Cadastro no Hub (seção 4 do formulário) ---- */
+.para-hub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.copiavel {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espaco-3);
+  font-size: var(--text-sm);
+}
+
+.copiavel__rotulo {
+  color: var(--cor-texto-suave);
+  font-size: var(--text-xs);
+}
+
+.copiavel__valor {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px var(--espaco-2);
+  border: 1px solid var(--cor-borda);
+  border-radius: 4px;
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-size: var(--text-xs);
+}
+
+/* ---- Tela de categorias ---- */
+.categoria-nova--topo .campo__entrada {
+  max-width: 420px;
+}
+
+.categorias {
+  list-style: none;
+  margin: 0 0 var(--espaco-3);
+  padding: 0;
+}
+
+.categorias__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) 0;
+}
+
+.categorias__item + .categorias__item {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.categorias__ordem {
+  display: flex;
+  gap: var(--espaco-1);
+}
+
+.categorias__conteudo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.categorias__nome {
+  font-weight: var(--peso-semibold);
+}
+
+.categorias__nome--inativa {
+  color: var(--cor-texto-suave);
+}
+
+.categorias__acoes {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.lista-dashboards__detalhe {
+  font-size: var(--text-xs);
+  font-weight: var(--peso-regular);
+  color: var(--cor-texto-suave);
+}
+
+@media (max-width: 900px) {
+  .busca__entrada {
+    width: 100%;
+  }
+
+  .busca {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 560px) {
+  .paginas__corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Links de cada página, dentro do cartão do Hub */
+.para-hub__paginas summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+}
+
+.para-hub__paginas[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+@media (max-width: 768px) {
+  .copiavel {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .copiavel__rotulo {
+    grid-column: 1 / -1;
+  }
+}

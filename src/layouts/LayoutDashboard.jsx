@@ -1,0 +1,31 @@
+// Layout padrão de todo dashboard: barra lateral à esquerda e o conteúdo da página à direita.
+// O conteúdo (children) é o que vem entre <LayoutDashboard> e </LayoutDashboard>.
+
+import { useState } from 'react'
+
+import BarraLateral from '../componentes/BarraLateral.jsx'
+import { LINK_CHAMADO } from '../config.js'
+import './LayoutDashboard.css'
+
+// Em telas estreitas, a barra lateral já começa recolhida
+const comecaRecolhida = () => window.matchMedia('(max-width: 768px)').matches
+
+export default function LayoutDashboard({ dashboard, caminhoBase, aviso, children }) {
+  const [recolhida, setRecolhida] = useState(comecaRecolhida)
+
+  return (
+    <div className="layout-dashboard">
+      <BarraLateral
+        dashboard={dashboard}
+        recolhida={recolhida}
+        aoAlternar={() => setRecolhida((atual) => !atual)}
+        linkChamado={LINK_CHAMADO}
+        caminhoBase={caminhoBase}
+      />
+      <main className="layout-dashboard__conteudo">
+        {aviso}
+        {children}
+      </main>
+    </div>
+  )
+}

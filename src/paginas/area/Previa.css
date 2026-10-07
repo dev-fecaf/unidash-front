@@ -1,0 +1,23 @@
+.faixa-previa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin: calc(-1 * var(--espaco-5)) calc(-1 * var(--espaco-6)) var(--espaco-5);
+  padding: var(--espaco-2) var(--espaco-6);
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+  font-size: var(--text-sm);
+}
+
+.faixa-previa a {
+  color: var(--cor-texto);
+  font-weight: var(--peso-medio);
+}
+
+@media (max-width: 768px) {
+  .faixa-previa {
+    margin: calc(-1 * var(--espaco-4)) calc(-1 * var(--espaco-4)) var(--espaco-4);
+    padding-inline: var(--espaco-4);
+  }
+}

@@ -1,0 +1,104 @@
+/* Seletor de opções com pílula deslizante, adaptado do Uiverse (Pradeepsaranbishnoi) aos tokens. */
+
+.seletor-opcoes {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  overflow-x: auto; /* em tela estreita, rola de lado (em vez de encolher o texto) */
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  box-shadow: 0 0 0 1px var(--cor-borda), 0 4px 10px rgba(18, 26, 43, 0.06);
+  font-size: var(--text-sm);
+  scrollbar-width: none;
+}
+
+.seletor-opcoes::-webkit-scrollbar {
+  display: none;
+}
+
+.seletor-opcoes__opcao {
+  position: relative;
+  z-index: 2; /* o texto fica por cima da pílula */
+  flex-shrink: 0;
+}
+
+/* O rádio fica invisível, mas continua existindo para o teclado e o leitor de tela
+   (o modelo original usava display: none, que tira o seletor do teclado) */
+.seletor-opcoes__opcao input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+.seletor-opcoes__texto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 var(--espaco-4);
+  border-radius: 999px;
+  color: var(--cor-texto-suave);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+.seletor-opcoes__texto:hover {
+  color: var(--cor-texto);
+}
+
+.seletor-opcoes__opcao--escolhida .seletor-opcoes__texto {
+  color: var(--cor-seletor-texto);
+  font-weight: var(--peso-semibold);
+}
+
+/* Bolinha de contagem */
+.seletor-opcoes__contagem {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--cor-grade);
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  font-weight: var(--peso-semibold);
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.15s ease-in, color 0.15s ease-in;
+}
+
+.seletor-opcoes__opcao--escolhida .seletor-opcoes__contagem {
+  background: var(--cor-seletor-texto);
+  color: var(--cor-superficie);
+}
+
+/* A pílula que desliza até a opção escolhida */
+.seletor-opcoes__pilula {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  z-index: 1;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--cor-seletor-pilula);
+  transition: transform 0.25s ease-out, width 0.25s ease-out;
+}
+
+/* Contorno de foco ao navegar pelo teclado */
+.seletor-opcoes__opcao input:focus-visible + .seletor-opcoes__texto {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seletor-opcoes__pilula {
+    transition: none;
+  }
+}

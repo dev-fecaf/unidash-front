@@ -1,0 +1,117 @@
+.dica {
+  position: relative;
+  display: inline-flex;
+}
+
+/* O "i": círculo pequeno, discreto, com área de clique um pouco maior que o desenho */
+.dica__botao {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1.5px solid var(--cor-texto-suave);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font: inherit;
+  font-size: 11px;
+  font-weight: var(--peso-bold);
+  line-height: 1;
+  cursor: help;
+}
+
+.dica__botao:hover,
+.dica__botao:focus-visible {
+  border-color: var(--cor-texto);
+  color: var(--cor-texto);
+}
+
+/* Balão: escondido até passar o mouse ou focar pelo teclado */
+.dica__balao {
+  position: absolute;
+  z-index: 2;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  width: max-content;
+  max-width: 260px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-sm);
+  background: var(--cor-lateral);
+  color: var(--cor-lateral-texto);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  font-weight: var(--peso-regular);
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 4px 12px rgba(18, 26, 43, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  pointer-events: none;
+}
+
+/* Setinha do balão */
+.dica__balao::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--cor-lateral);
+}
+
+.dica:hover .dica__balao,
+.dica__botao:focus-visible + .dica__balao {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* Variação para o canto de um cartão: abre para baixo, alinhado à direita (não sai da tela) */
+.dica--canto .dica__balao {
+  top: calc(100% + 8px);
+  bottom: auto;
+  left: auto;
+  right: -6px;
+  transform: translate(0, -4px);
+}
+
+.dica--canto .dica__balao::after {
+  top: auto;
+  bottom: 100%;
+  left: auto;
+  right: 9px;
+  transform: none;
+  border-top-color: transparent;
+  border-bottom-color: var(--cor-lateral);
+}
+
+.dica--canto:hover .dica__balao,
+.dica--canto .dica__botao:focus-visible + .dica__balao {
+  transform: translate(0, 0);
+}
+
+/* Variação ao lado do rótulo de um campo: abre para baixo, alinhado à esquerda */
+.dica--abaixo .dica__balao {
+  top: calc(100% + 8px);
+  bottom: auto;
+  left: -6px;
+  transform: translate(0, -4px);
+}
+
+.dica--abaixo .dica__balao::after {
+  top: auto;
+  bottom: 100%;
+  left: 9px;
+  transform: none;
+  border-top-color: transparent;
+  border-bottom-color: var(--cor-lateral);
+}
+
+.dica--abaixo:hover .dica__balao,
+.dica--abaixo .dica__botao:focus-visible + .dica__balao {
+  transform: translate(0, 0);
+}

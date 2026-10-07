@@ -1,0 +1,75 @@
+/* O que a barra da área tem de diferente da barra do dashboard (o resto vem de BarraLateral.css) */
+
+/* Mais espaço entre o símbolo e "UniDash · Administração" (só nesta barra) */
+.menu-area .lateral__marca {
+  gap: var(--espaco-5);
+}
+
+.menu-area__produto {
+  min-width: 0;
+}
+
+.menu-area__selo {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  color: var(--cor-lateral-texto-suave);
+}
+
+/* Bolinha amarela bem pequena: marca a área de administração (só estrutura, nunca cor de dado) */
+.menu-area__bolinha {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cor-lateral-administracao);
+}
+
+.menu-area__item {
+  gap: var(--espaco-3);
+}
+
+/* Rodapé: Portal UniData, Sair e, por último, quem está logado */
+.menu-area__rodape {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.menu-area__usuario {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3); /* mesmo espaço entre ícone e texto das opções acima */
+  margin-top: var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-3) 0; /* mesmo recuo das opções acima */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--cor-lateral-texto-suave);
+  min-width: 0;
+}
+
+.menu-area__usuario > svg {
+  flex-shrink: 0;
+}
+
+.menu-area__identificacao {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menu-area__nome {
+  font-size: var(--text-sm);
+  font-weight: var(--peso-semibold);
+  color: var(--cor-lateral-texto);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-area__perfil {
+  font-size: var(--text-xs);
+  color: var(--cor-lateral-texto-suave);
+}

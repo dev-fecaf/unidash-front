@@ -1,0 +1,8 @@
+# Fica fora da imagem: bibliotecas do Windows, site já montado, .env do computador e git
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.git/
+.claude/

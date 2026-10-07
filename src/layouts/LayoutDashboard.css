@@ -1,0 +1,17 @@
+.layout-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: var(--cor-fundo);
+}
+
+.layout-dashboard__conteudo {
+  flex: 1;
+  min-width: 0; /* deixa gráficos e tabelas encolherem sem estourar a largura */
+  padding: var(--espaco-5) var(--espaco-6) var(--espaco-7);
+}
+
+@media (max-width: 768px) {
+  .layout-dashboard__conteudo {
+    padding: var(--espaco-4);
+  }
+}

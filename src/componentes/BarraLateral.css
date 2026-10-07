@@ -1,0 +1,185 @@
+.lateral {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-lateral);
+  color: var(--cor-lateral-texto);
+  transition: width 0.2s ease;
+  /* Fica parada enquanto o conteúdo do dashboard rola */
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.lateral--recolhida {
+  width: 64px;
+}
+
+/* ---- Topo: nome do dashboard e botão de recolher ---- */
+.lateral__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-1);
+  padding: var(--espaco-4) var(--espaco-2) var(--espaco-4) var(--espaco-4);
+}
+
+.lateral--recolhida .lateral__topo {
+  flex-direction: column;
+  align-items: center;
+  padding-inline: var(--espaco-2);
+}
+
+/* Símbolo da UniFECAF + nome do dashboard */
+.lateral__marca {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  min-width: 0;
+}
+
+.lateral__logo {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.lateral__titulo {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  font-weight: var(--peso-semibold);
+  /* Sempre em uma linha; nome longo termina em "…" (o completo aparece ao passar o mouse) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lateral__alternar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-lateral-texto-suave);
+  cursor: pointer;
+}
+
+.lateral__alternar:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cor-lateral-texto);
+}
+
+/* Recolhida: a lista some, mas o rodapé continua embaixo */
+.lateral--recolhida::after {
+  content: '';
+  flex: 1;
+}
+
+/* ---- Lista de páginas ---- */
+.lateral__paginas {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--espaco-4) var(--espaco-2) 0;
+  /* Linha fina separando o topo das páginas (igual à do rodapé) */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lateral__rotulo {
+  margin: var(--espaco-2) var(--espaco-2) var(--espaco-2);
+  font-size: var(--text-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-lateral-texto-suave);
+}
+
+.lateral__paginas ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.lateral__pagina {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: 40px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-sm);
+  color: var(--cor-lateral-texto-suave);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  text-decoration: none;
+}
+
+.lateral__pagina:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--cor-lateral-texto);
+}
+
+/* Página aberta: fundo #102E33 + faixa verde #00E375 à esquerda + peso médio.
+   O fundo sozinho quase não se distingue da lateral (1,2:1); a faixa verde (10,1:1)
+   é o que marca a página ativa. */
+.lateral__pagina--ativa,
+.lateral__pagina--ativa:hover {
+  background: var(--cor-lateral-ativo-fundo);
+  color: var(--cor-lateral-texto);
+  font-weight: var(--peso-medio);
+  box-shadow: inset 1px 0 0 var(--cor-lateral-ativo-marcador);
+}
+
+/* ---- Rodapé: Abrir chamado ---- */
+.lateral__rodape {
+  padding: var(--espaco-3) var(--espaco-2) var(--espaco-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lateral__chamado {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: 40px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-lateral-texto);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lateral--recolhida .lateral__chamado {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+.lateral__chamado:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lateral__chamado:disabled {
+  color: var(--cor-lateral-texto-suave);
+  cursor: not-allowed;
+}
+
+/* Contorno de foco visível sobre o fundo escuro */
+.lateral :focus-visible {
+  outline: 2px solid var(--cor-lateral-texto);
+  outline-offset: 2px;
+}

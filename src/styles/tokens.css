@@ -1,0 +1,83 @@
+/*
+ * Tokens do design system do UniDash.
+ *
+ * Um "token" é um nome para um valor de design (cor, tamanho, espaçamento).
+ * Os componentes usam sempre o nome (ex.: var(--cor-fundo)), nunca o valor direto.
+ * Para mudar uma cor no sistema inteiro, basta mudar aqui.
+ *
+ * Só tema claro. Contrastes conferidos em 06/10/2026 (WCAG 2.1 AA: texto >= 4,5:1).
+ */
+
+:root {
+  /* ---- Estrutura ---- */
+  --cor-lateral: #121A2B;              /* barra lateral esquerda */
+  --cor-lateral-texto: #FFFFFF;        /* 17,4:1 sobre a lateral */
+  --cor-lateral-texto-suave: #AEB6C6;  /* 8,5:1 sobre a lateral */
+  --cor-fundo: #F5F6F8;                /* fundo dos dashboards */
+  --cor-superficie: #FFFFFF;           /* cards, gráficos, tabelas */
+  --cor-borda: #DDE1E8;
+  --cor-borda-forte: #C6CCD6;          /* borda ao passar o mouse em campos e botões */
+  --cor-superficie-suave: #FAFBFC;     /* cabeçalho de tabela, linha da tabela ao passar o mouse */
+  --cor-institucional: #002156;        /* só estrutura, nunca cor de dado */
+
+  /* Marcador da página ativa na barra lateral (só estrutura, nunca cor de dado).
+     O verde NÃO serve como texto em fundo claro (1,7:1 sobre branco). */
+  --cor-lateral-ativo-fundo: #102E33;  /* texto branco por cima: 14,4:1 */
+  --cor-lateral-ativo-marcador: #00E375; /* faixa verde: 10,1:1 sobre a lateral */
+
+  /* Selo "Administração" na barra lateral da área do time de dados (só estrutura) */
+  --cor-lateral-administracao: #FFC83D;  /* amarelo: 11,2:1 sobre a lateral */
+
+  /* ---- Texto ---- */
+  --cor-texto: #1A2233;                /* 14,7:1 sobre o fundo */
+  --cor-texto-suave: #566072;          /* 5,9:1 sobre o fundo; metadados, legendas */
+  --cor-texto-exemplo: #6B7485;        /* texto de exemplo dentro dos campos (placeholder): 4,7:1 sobre branco */
+
+  /* ---- Dados (gráficos) ---- PROVISÓRIO até a paleta da etapa 3.
+     Cor 1 da paleta de referência validada (daltonismo e contraste: 4,5:1 sobre branco). */
+  --cor-serie-1: #2A78D6;
+  --cor-grade: #E7E9EE;                /* fundo das barras e linhas de grade, bem discretas */
+
+  /* ---- Seletor de opções (pílula deslizante) ---- */
+  --cor-seletor-pilula: #E3EDEB;       /* pílula da opção escolhida: tom claro do #102E33 */
+  --cor-seletor-texto: #102E33;        /* texto da opção escolhida: 12,0:1 sobre a pílula */
+
+  /* ---- Estados (nunca usar só a cor: sempre junto de ícone ou texto) ---- */
+  --cor-positivo: #1B7A47;             /* 5,4:1 sobre branco */
+  --cor-atencao: #9A5B00;              /* 5,4:1 sobre branco */
+  --cor-atencao-fundo: #FDF3E1;        /* fundo claro para o âmbar: 4,9:1 */
+  --cor-atencao-borda: #F0DCB4;        /* borda das mensagens de atenção */
+  --cor-negativo: #B42318;             /* 6,6:1 sobre branco */
+
+  /* ---- Tipografia: Montserrat ---- */
+  --fonte: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --peso-regular: 400;   /* corpo de texto */
+  --peso-medio: 500;     /* nome de item ativo */
+  --peso-semibold: 600;  /* títulos */
+  --peso-bold: 700;      /* rótulos em caixa alta */
+
+  /* Escala de tamanhos (tamanho / altura da linha) */
+  --text-xs: 13px;      --text-xs-lh: 1.4;      /* breadcrumb, resumo de filtros, metadado */
+  --text-sm: 14px;      --text-sm-lh: 1.4;      /* opção de multisseleção, chip, botão secundário */
+  --text-md: 15px;      --text-md-lh: 1.5;      /* texto de campo, botão primário, corpo padrão */
+  --text-lg: 18px;      --text-lg-lh: 1.4;      /* título de card */
+  --text-xl: 22px;      --text-xl-lh: 1.3;      /* subtítulo de seção */
+  --text-display: 32px; --text-display-lh: 1.2; /* título de página */
+
+  /* ---- Espaçamentos (múltiplos de 4px) ---- */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+
+  /* ---- Bordas e sombras ---- */
+  --raio-sm: 6px;
+  --raio-md: 10px;
+  --sombra-card: 0 1px 2px rgba(18, 26, 43, 0.06), 0 1px 3px rgba(18, 26, 43, 0.08);
+
+  /* ---- Foco do teclado (acessibilidade) ---- */
+  --cor-foco: #2F6FED;
+}

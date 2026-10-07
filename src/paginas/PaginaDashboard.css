@@ -1,0 +1,59 @@
+.pagina__cabecalho {
+  margin-bottom: var(--espaco-5);
+}
+
+.pagina__breadcrumb {
+  margin: 0 0 var(--espaco-1);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  color: var(--cor-texto-suave);
+}
+
+.pagina__preparo {
+  margin: 0;
+  padding: var(--espaco-5);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-suave);
+}
+
+.pagina__filtros {
+  margin-bottom: var(--espaco-5);
+}
+
+/* Grade da página: 12 colunas; indicadores ocupam 4, gráficos ocupam 6 */
+.pagina__grade {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--espaco-4);
+}
+
+.espaco-reservado {
+  display: grid;
+  place-items: center;
+  min-height: 56px;
+  padding: var(--espaco-4);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-suave);
+  font-size: var(--text-sm);
+}
+
+.espaco-reservado--kpi {
+  grid-column: span 4;
+  min-height: 120px;
+}
+
+.espaco-reservado--grafico {
+  grid-column: span 6;
+  min-height: 320px;
+}
+
+@media (max-width: 1024px) {
+  .espaco-reservado--kpi,
+  .espaco-reservado--grafico {
+    grid-column: span 12;
+  }
+}
