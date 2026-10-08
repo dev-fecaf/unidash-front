@@ -1,3 +1,10 @@
+/* Nos dashboards a barra lateral usa a cor própria deles (--cor-lateral-dashboard, #121A2B),
+   diferente da área do time (#0B0F1A). :where() deixa esta regra "fraca", para o tema.css de
+   cada dashboard (.dashboard-<identificador>) sempre conseguir trocar a cor. */
+:where(.layout-dashboard) {
+  --cor-lateral: var(--cor-lateral-dashboard);
+}
+
 .layout-dashboard {
   display: flex;
   min-height: 100vh;

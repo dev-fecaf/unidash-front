@@ -26,6 +26,13 @@ export default function CampoCategoria({ valor, aoMudar, erro, temAlteracoes = f
   // Só as ativas podem ser escolhidas; a atual aparece mesmo se estiver desativada
   const opcoes = categorias.filter((c) => c.ativo || String(c.id) === valor)
 
+  // Sem a opção "Escolha uma categoria" (pedido de 08/10/2026): dashboard novo já começa com a
+  // primeira categoria da lista. Assim o que aparece no campo é sempre o que vai ser salvo.
+  const primeira = opcoes[0]?.id
+  useEffect(() => {
+    if (!valor && primeira !== undefined) aoMudar(String(primeira))
+  }, [valor, primeira, aoMudar])
+
   function escolher(e) {
     if (e.target.value === NOVA) {
       setCriando(true)
@@ -76,7 +83,7 @@ export default function CampoCategoria({ valor, aoMudar, erro, temAlteracoes = f
           aria-invalid={Boolean(erro)}
           aria-describedby={erro ? 'erro-categoria' : undefined}
         >
-          <option value="">Escolha uma categoria</option>
+          {opcoes.length === 0 && <option value="">Nenhuma categoria ainda</option>}
           {opcoes.map((c) => (
             <option key={c.id} value={c.id}>
               {c.nome}

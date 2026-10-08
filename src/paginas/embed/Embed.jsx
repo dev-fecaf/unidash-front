@@ -9,6 +9,10 @@
 // 4. A sessão fica só na memória (useRef), nunca em cookie nem no navegador.
 // 5. Um minuto antes de a sessão vencer, pedimos um token novo ao Hub ('embed:token-expired').
 //
+// Regra de 08/10/2026: dashboard SEM PASTA no front (src/dashboards/<identificador>/, criada pelo
+// comando novo_dashboard e já publicada no site) não abre: mostra "em construção" e nem pede o
+// token ao Hub (então também não grava acesso).
+//
 // Conceito novo de React: useRef guarda um valor entre um desenho e outro da tela sem
 // redesenhar quando muda (bom para a sessão, que a tela não precisa mostrar).
 
@@ -17,6 +21,8 @@ import { Navigate, useParams } from 'react-router-dom'
 
 import { enviar } from '../../api/cliente.js'
 import { EMBED_HUB_ORIGIN } from '../../config.js'
+import { pecasDoDashboard } from '../../dashboards/pecas.js'
+import { buscarDashboard } from '../../dashboards/registro.js'
 import LayoutDashboard from '../../layouts/LayoutDashboard.jsx'
 import AvisoEmbed from './AvisoEmbed.jsx'
 import '../PaginaDashboard.css'
@@ -58,8 +64,15 @@ export default function Embed() {
   const { hash, codigo } = useParams()
   const [estado, setEstado] = useState({ fase: 'aguardando' })
   const sessao = useRef(null) // usada pelos endpoints de dados (etapa 3)
+  const temPasta = Boolean(buscarDashboard(hash))
 
   useEffect(() => {
+    // Sem pasta no front: o dashboard ainda não foi construído. Não fala com o Hub nem com o back.
+    if (!temPasta) {
+      avisar('dashboard sem pasta no front (src/dashboards/): mostrando "em construção"')
+      setEstado({ fase: 'em_construcao' })
+      return undefined
+    }
     // Aberto fora de um iframe (direto no navegador): não há Hub para mandar o token
     if (window.parent === window) {
       setEstado({ fase: 'fora_do_hub' })
@@ -131,7 +144,7 @@ export default function Embed() {
       clearTimeout(limite)
       clearInterval(repeticao)
     }
-  }, [hash])
+  }, [hash, temPasta])
 
   const dashboard = estado.dashboard
   const pagina = dashboard?.paginas.find((p) => p.codigo === codigo)
@@ -148,14 +161,22 @@ export default function Embed() {
   // Sem página no endereço, ou página não liberada: vai para a primeira liberada
   if (!pagina) return <Navigate to={`/embed/${hash}/${dashboard.paginas[0].codigo}`} replace />
 
+  // Cores e conteúdo da página vêm da pasta do dashboard (src/dashboards/<identificador>/), se existir
+  const { classe, Conteudo } = pecasDoDashboard(hash, pagina.codigo)
+
   return (
-    <LayoutDashboard dashboard={dashboard} caminhoBase="/embed">
-      <header className="pagina__cabecalho">
-        <p className="pagina__breadcrumb">{dashboard.nome}</p>
-        <h1>{pagina.nome}</h1>
-      </header>
-      {/* Os gráficos de cada dashboard entram na etapa 3 (configuração em src/dashboards/<slug>/) */}
-      <p className="pagina__preparo">Os gráficos desta página ainda estão em preparação.</p>
+    <LayoutDashboard dashboard={dashboard} caminhoBase="/embed" classe={classe}>
+      {Conteudo ? (
+        <Conteudo dashboard={dashboard} pagina={pagina} />
+      ) : (
+        <>
+          <header className="pagina__cabecalho">
+            <p className="pagina__breadcrumb">{dashboard.nome}</p>
+            <h1>{pagina.nome}</h1>
+          </header>
+          <p className="pagina__preparo">Os gráficos desta página ainda estão em preparação.</p>
+        </>
+      )}
     </LayoutDashboard>
   )
 }

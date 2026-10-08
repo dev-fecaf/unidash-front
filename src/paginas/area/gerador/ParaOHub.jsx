@@ -3,7 +3,10 @@
 
 import { useState } from 'react'
 
-function Copiavel({ rotulo, valor }) {
+import { HUB_URL } from '../../../config.js'
+
+// Também usado no formulário (comando que cria as pastas do dashboard)
+export function Copiavel({ rotulo, valor }) {
   const [copiado, setCopiado] = useState(false)
 
   async function copiar() {
@@ -31,14 +34,25 @@ function Copiavel({ rotulo, valor }) {
 }
 
 export default function ParaOHub({ hash, paginas = [] }) {
-  const base = `${window.location.origin}/embed/${hash}`
+  // O Hub tem dois campos: o link, com o texto {hash} no lugar do código (o próprio Hub troca),
+  // e o código (hash) logo abaixo. Por isso o link vai com "{hash}" literal, não com o código.
+  const base = `${window.location.origin}/embed/{hash}`
   const ativas = paginas.filter((p) => p.ativo)
   return (
     <div className="para-hub">
-      <p className="campo__ajuda">Cadastre no Hub o link e o código.</p>
+      <div className="para-hub__topo">
+        <p className="campo__ajuda">No Hub: o link no campo de cima e o código no de baixo.</p>
+        {HUB_URL && (
+          // Abre o Hub numa aba nova, para copiar daqui e colar lá sem perder o formulário
+          <a className="botao botao--secundario botao--pequeno" href={HUB_URL} target="_blank" rel="noopener noreferrer">
+            Abrir o Hub
+            <span className="visualmente-oculto"> (abre em outra aba)</span>
+          </a>
+        )}
+      </div>
       <Copiavel rotulo="Link para o Hub" valor={base} />
       <Copiavel rotulo="Código (hash)" valor={hash} />
-      <p className="campo__ajuda">O link abre o dashboard na primeira página. O código nunca muda.</p>
+      <p className="campo__ajuda">O link é o mesmo para todo dashboard: o Hub troca o {'{hash}'} pelo código. Abre na primeira página. O código nunca muda.</p>
 
       {ativas.length > 0 && (
         <details className="para-hub__paginas">

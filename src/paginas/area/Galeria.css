@@ -1,3 +1,6 @@
+/* Tela Dashboards (galeria). Filtros: classes do Gerador (Gerador.css). Linha visual sóbria:
+   linhas finas, sem sombras pesadas; o cartão inteiro é clicável. */
+
 .galeria {
   display: flex;
   flex-direction: column;
@@ -11,6 +14,13 @@
 
 .galeria__mensagem--erro {
   color: var(--cor-negativo);
+}
+
+/* Filtros no topo: a mesma faixa da tabela do Gerador, num quadro próprio */
+.galeria__barra {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
 }
 
 .galeria__vazia {
@@ -29,7 +39,21 @@
   color: var(--cor-texto-suave);
 }
 
+.galeria__vazia--filtro {
+  align-items: center;
+  text-align: center;
+  font-size: var(--text-sm);
+}
+
+.galeria__vazia-titulo {
+  color: var(--cor-texto) !important;
+  font-weight: var(--peso-semibold);
+}
+
 .galeria__categoria {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
   margin-bottom: var(--espaco-3);
   font-size: var(--text-xs);
   line-height: var(--text-xs-lh);
@@ -39,140 +63,105 @@
   color: var(--cor-texto-suave);
 }
 
+/* Quantos dashboards o grupo tem, numa bolinha discreta */
+.galeria__quantidade {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--cor-grade);
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  line-height: 18px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
 .galeria__lista {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: var(--espaco-4);
 }
 
-/* ---- Cartão de um dashboard ---- */
+/* ---- Cartão de um dashboard (o cartão inteiro é o link para a pré-visualização) ---- */
 .cartao {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--espaco-2);
-  padding: var(--espaco-5);
+  padding: var(--espaco-4) var(--espaco-5);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-md);
   background: var(--cor-superficie);
-  box-shadow: var(--sombra-card);
+  color: var(--cor-texto);
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cartao:hover {
+  border-color: var(--cor-borda-forte);
+  box-shadow: 0 2px 8px rgba(11, 15, 26, 0.06);
+}
+
+.cartao:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
 }
 
 .cartao--exemplo {
   border-style: dashed;
-  box-shadow: none;
 }
 
-.cartao__cabecalho {
+.cartao__topo {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--espaco-3);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.cartao__etiqueta {
+  font-size: var(--text-xs);
+  color: var(--cor-texto-suave);
 }
 
 .cartao__nome {
-  font-size: var(--text-lg);
-  line-height: var(--text-lg-lh);
+  font-size: var(--text-md);
+  font-weight: var(--peso-semibold);
 }
 
+/* Descrição em no máximo 2 linhas: os cartões ficam com a mesma altura */
 .cartao__descricao {
-  margin: 0;
   flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
   font-size: var(--text-sm);
-  color: var(--cor-texto-suave);
-}
-
-.cartao__meta {
-  margin: 0;
-  font-size: var(--text-xs);
-  color: var(--cor-texto-suave);
-}
-
-/* Onde editar: Front / Back / DW, cada um com Copiar */
-.caminhos {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-2);
-  margin: var(--espaco-1) 0 0;
-  padding: var(--espaco-3);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-sm);
-  background: var(--cor-superficie-suave);
-  font-size: var(--text-xs);
-  line-height: var(--text-xs-lh);
-}
-
-.caminho {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
-  gap: var(--espaco-2);
-}
-
-.caminho__rotulo {
-  font-weight: var(--peso-medio);
-  color: var(--cor-texto-suave);
-}
-
-.caminho__valor {
-  margin: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto; /* caminho | Copiar */
-  align-items: baseline;
-  gap: 0 var(--espaco-3);
-  min-width: 0;
-}
-
-.caminho__valor code {
-  overflow-wrap: anywhere; /* caminho longo quebra a linha em vez de sumir */
-  color: var(--cor-texto);
-}
-
-.caminho__copiar {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--cor-texto);
-  font: inherit;
-  font-weight: var(--peso-medio);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  cursor: pointer;
-}
-
-.caminho__ajuda {
-  grid-column: 1 / -1;
   color: var(--cor-texto-suave);
 }
 
 .cartao__rodape {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--espaco-2) var(--espaco-3);
-  margin-top: var(--espaco-2);
-}
-
-.cartao__acao {
-  display: inline-flex;
-  align-items: center;
+  justify-content: space-between;
   gap: var(--espaco-2);
-  align-self: flex-start;
-  padding: var(--espaco-2) var(--espaco-4);
-  border-radius: var(--raio-sm);
-  background: var(--cor-lateral);
-  color: var(--cor-lateral-texto);
-  font-size: var(--text-sm);
-  font-weight: var(--peso-medio);
-  text-decoration: none;
-}
-
-.cartao__acao:hover {
-  background: var(--cor-lateral-ativo-fundo);
-}
-
-.cartao__aviso {
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-borda);
   font-size: var(--text-xs);
   color: var(--cor-texto-suave);
+}
+
+/* Setinha: ganha força ao passar o mouse no cartão */
+.cartao__abrir {
+  display: inline-flex;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.cartao:hover .cartao__abrir {
+  opacity: 1;
+  transform: translateX(2px);
 }

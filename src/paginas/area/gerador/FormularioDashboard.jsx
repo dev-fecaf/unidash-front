@@ -18,7 +18,7 @@ import SeletorOpcoes from '../../../componentes/SeletorOpcoes.jsx'
 import { buscarDashboard } from '../../../dashboards/registro.js'
 import CampoCategoria from './CampoCategoria.jsx'
 import EditorPaginas, { novaPagina } from './EditorPaginas.jsx'
-import ParaOHub from './ParaOHub.jsx'
+import ParaOHub, { Copiavel } from './ParaOHub.jsx'
 import PreviaNome from './PreviaNome.jsx'
 import './Gerador.css'
 
@@ -135,8 +135,7 @@ export default function FormularioDashboard({ hash, mensagemInicial = null, aoSa
       if (editando) {
         const alterado = await alterar(`/gerador/dashboards/${hash}`, corpo)
         carregar(alterado)
-        setMensagem('Alterações salvas.')
-        aoSalvar(alterado, false)
+        aoSalvar(alterado, false) // a lista fecha o painel e mostra "Alterações salvas"
       } else {
         aoSalvar(await enviar('/gerador/dashboards', corpo), true) // a lista abre a edição do criado
       }
@@ -180,7 +179,7 @@ export default function FormularioDashboard({ hash, mensagemInicial = null, aoSa
               <Dica
                 posicao="abaixo"
                 rotulo="Sobre o nome"
-                texto="É o título do dashboard (no topo da barra lateral, na galeria e no Hub). A partir dele o sistema gera o identificador gravado no banco: minúsculas, sem acentos e com _ no lugar dos espaços. O identificador é usado na pasta do front e no schema do DW (dash_identificador) e não muda depois de criado."
+                texto="Título que aparece para quem usa o dashboard. Dele sai o identificador, que vira o nome do schema no DW (criado vazio ao salvar) e da pasta do front e do back. Não muda depois de criado."
               />
             </span>
             <input
@@ -193,7 +192,16 @@ export default function FormularioDashboard({ hash, mensagemInicial = null, aoSa
               aria-invalid={Boolean(erros.nome)}
               aria-describedby={erros.nome ? 'erro-nome' : undefined}
             />
-            <PreviaNome nome={form.nome} slugFixo={salvo?.slug} />
+            <PreviaNome nome={form.nome} slugFixo={salvo?.slug} hash={salvo?.hash} schema={salvo?.schema_dw} />
+            {salvo && (
+              // As pastas do front e do back são código (vão para o GitHub): o comando cria no computador
+              <div className="comando-pastas">
+                <p className="campo__ajuda">
+                  Para criar as pastas do front e do back, rode na pasta <code>UniDash</code>, com o Docker ligado:
+                </p>
+                <Copiavel rotulo="Comando" valor={`docker compose exec backend python -m scripts.novo_dashboard ${salvo.slug}`} />
+              </div>
+            )}
             {erros.nome && <p id="erro-nome" className="campo__erro">{erros.nome}</p>}
           </div>
 

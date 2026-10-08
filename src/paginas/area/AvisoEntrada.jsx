@@ -1,6 +1,6 @@
 // Tela simples de aviso da entrada: "entrando…", "entre pelo portal", "sem acesso".
 
-import logo from '../../assets/logo-unifecaf.png'
+import logo from '../../assets/logo1.png'
 import { PORTAL_URL } from '../../config.js'
 import './AvisoEntrada.css'
 

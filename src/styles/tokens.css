@@ -11,7 +11,8 @@
 :root {
   /* ---- Estrutura ---- */
   --cor-lateral: #0B0F1A;              /* barra lateral esquerda (trocada de #121A2B em 07/10/2026) */
-  --cor-lateral-texto: #FFFFFF;        /* 19,1:1 sobre a lateral */
+  --cor-lateral-dashboard: #121A2B;    /* barra lateral DOS DASHBOARDS (padrão; cada um pode trocar no tema.css). 08/10/2026 */
+  --cor-lateral-texto: #FFFFFF;        /* 19,1:1 sobre a lateral; 17,4:1 sobre a lateral dos dashboards */
   --cor-lateral-texto-suave: #AEB6C6;  /* 9,4:1 sobre a lateral */
   --cor-fundo: #F5F6F8;                /* fundo dos dashboards */
   --cor-superficie: #FFFFFF;           /* cards, gráficos, tabelas */
@@ -28,7 +29,6 @@
   /* Página/tela selecionada na barra lateral (desde 07/10/2026, no lugar do verde):
      branco levemente transparente por cima da lateral, com faixa branca. Texto branco: ~15:1 */
   --cor-lateral-selecionado-fundo: rgba(255, 255, 255, 0.1);
-  --cor-lateral-selecionado-marcador: rgba(255, 255, 255, 0.85);
 
   /* Selo "Administração" na barra lateral da área do time de dados (só estrutura) */
   --cor-lateral-administracao: #FFC83D;  /* amarelo: 12,4:1 sobre a lateral */
@@ -54,6 +54,8 @@
 
   /* ---- Estados (nunca usar só a cor: sempre junto de ícone ou texto) ---- */
   --cor-positivo: #1B7A47;             /* 5,4:1 sobre branco */
+  --cor-positivo-fundo: #EDF7F0;       /* fundo claro para o verde: 5,0:1 */
+  --cor-positivo-borda: #CFE8D8;       /* borda das mensagens de sucesso */
   --cor-atencao: #9A5B00;              /* 5,4:1 sobre branco */
   --cor-atencao-fundo: #FDF3E1;        /* fundo claro para o âmbar: 4,9:1 */
   --cor-atencao-borda: #F0DCB4;        /* borda das mensagens de atenção */

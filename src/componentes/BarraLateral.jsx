@@ -4,7 +4,7 @@
 
 import { NavLink } from 'react-router-dom'
 
-import logo from '../assets/logo-unifecaf.png'
+import logo from '../assets/logo1.png'
 import Icone from './Icone.jsx'
 import './BarraLateral.css'
 
@@ -13,7 +13,7 @@ export default function BarraLateral({ dashboard, recolhida, aoAlternar, linkCha
     <aside className={`lateral${recolhida ? ' lateral--recolhida' : ''}`}>
       <div className="lateral__topo">
         <div className="lateral__marca">
-          <img className="lateral__logo" src={logo} alt="UniFECAF" width="20" height="20" />
+          <img className="lateral__logo" src={logo} alt="UniFECAF" width="26" height="26" />
           {!recolhida && (
             <p className="lateral__titulo" title={dashboard.nome}>
               {dashboard.nome}

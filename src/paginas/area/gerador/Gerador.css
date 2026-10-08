@@ -203,7 +203,7 @@
 
 /* ---- Tabela de dashboards ---- */
 .tabela-moldura {
-  overflow-x: auto;
+  overflow: hidden; /* só para os cantos arredondados; quem rola é a .tabela__rolagem */
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-md);
   background: var(--cor-superficie);
@@ -218,6 +218,116 @@
   gap: var(--espaco-3);
   padding: var(--espaco-3) var(--espaco-4);
   border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabela__barra-direita {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+/* Filtro de categoria: mesmo visual da busca discreta (pílula cinza, branca ao focar) */
+.filtro-categoria__entrada {
+  height: 40px;
+  max-width: 240px;
+  padding: 0 36px 0 var(--espaco-4);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--cor-fundo)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23566072' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right 14px center;
+  color: var(--cor-texto);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  appearance: none;
+  cursor: pointer;
+}
+
+.filtro-categoria__entrada:hover {
+  border-color: var(--cor-borda);
+}
+
+.filtro-categoria__entrada:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 0;
+  border-color: var(--cor-foco);
+  background-color: var(--cor-superficie);
+}
+
+/* A tabela rola por dentro (para os dois lados) e o cabeçalho fica parado no topo.
+   A altura acompanha a janela: sobra espaço para a barra superior, os filtros e a paginação. */
+.tabela__rolagem {
+  max-height: max(320px, calc(100dvh - 260px));
+  overflow: auto;
+}
+
+.tabela thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Título de coluna clicável (ordenar) */
+.tabela__ordenar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.tabela__ordenar > svg {
+  /* A seta fica "pendurada" à direita, fora da conta da largura: o texto do título
+     alinha certinho com os valores da coluna (inclusive na coluna centralizada) */
+  position: absolute;
+  left: calc(100% + var(--espaco-1));
+  opacity: 0; /* a seta só aparece na coluna que ordena, ou ao passar o mouse */
+}
+
+.tabela__ordenar:hover {
+  color: var(--cor-texto);
+}
+
+.tabela__ordenar:hover > svg {
+  opacity: 0.5;
+}
+
+.tabela__ordenar--ativa {
+  color: var(--cor-texto);
+}
+
+.tabela__ordenar--ativa > svg,
+.tabela__ordenar--ativa:hover > svg {
+  opacity: 1;
+}
+
+.tabela__ordenar:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Paginação: só aparece com mais de 25 linhas filtradas */
+.tabela__paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.tabela__paginacao-texto {
+  margin-right: var(--espaco-2);
+  color: var(--cor-texto-suave);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Dentro da tabela, o seletor dispensa a sombra (a moldura já separa) */
@@ -270,12 +380,12 @@
 }
 
 .tabela__numero {
-  text-align: right;
+  text-align: center; /* número e título da coluna centralizados, um embaixo do outro */
   font-variant-numeric: tabular-nums;
 }
 
 .tabela th.tabela__numero {
-  text-align: right;
+  text-align: center;
 }
 
 .tabela__data {
@@ -497,21 +607,57 @@
 .identificador {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   color: var(--cor-texto-suave);
   font-size: var(--text-xs);
 }
 
-.identificador__linha {
+.identificador__titulo {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
   margin: 0;
+  color: var(--cor-texto);
+  font-weight: var(--peso-semibold);
 }
 
-.identificador__separador {
-  margin: 0 2px;
+.identificador__titulo .identificador__nota {
+  color: var(--cor-texto-suave);
+  font-weight: var(--peso-regular);
+}
+
+/* Onde o identificador é usado: rótulo à esquerda, valor à direita, alinhados em coluna */
+.identificador__usos {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: var(--espaco-3);
+  border-left: 2px solid var(--cor-borda);
+}
+
+.identificador__uso {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--espaco-2);
+}
+
+.identificador__uso dt {
+  color: var(--cor-texto-suave);
+}
+
+.identificador__uso dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  min-width: 0;
+}
+
+.identificador__uso code {
+  overflow-wrap: anywhere;
 }
 
 .identificador code {
@@ -525,6 +671,54 @@
 .identificador__nota::before {
   content: '·';
   margin-right: 6px;
+}
+
+.identificador__nota--ok {
+  color: var(--cor-positivo);
+}
+
+.identificador__nota--atencao {
+  color: var(--cor-atencao);
+}
+
+/* Comando que cria as pastas do dashboard (embaixo do identificador, na edição) */
+.comando-pastas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-3);
+}
+
+.comando-pastas .campo__ajuda {
+  margin: 0;
+}
+
+.comando-pastas .copiavel__valor {
+  overflow-wrap: anywhere;
+}
+
+/* "Criar agora" do schema no DW: ação pequena, com cara de link */
+.identificador__acao {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-semibold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.identificador__acao:disabled {
+  color: var(--cor-texto-suave);
+  cursor: default;
+}
+
+.identificador__acao:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .campo__erro {
@@ -550,7 +744,9 @@
 }
 
 .mensagem--sucesso {
+  border-color: var(--cor-positivo-borda);
   border-left-color: var(--cor-positivo);
+  background: var(--cor-positivo-fundo); /* verde bem fraco, para destacar sem pesar */
   color: var(--cor-positivo);
   font-weight: var(--peso-medio);
 }
@@ -634,11 +830,11 @@
   box-shadow: 0 -2px 0 var(--cor-lateral-ativo-fundo);
 }
 
-/* Miniatura da barra lateral do dashboard (só visual) */
+/* Miniatura da barra lateral do dashboard (só visual): mesma cor da lateral dos dashboards */
 .previa-lateral {
   padding: var(--espaco-2);
   border-radius: var(--raio-sm);
-  background: var(--cor-lateral);
+  background: var(--cor-lateral-dashboard);
   color: var(--cor-lateral-texto-suave);
   font-size: 11px;
   line-height: 1.35;
@@ -687,7 +883,6 @@
 
 .previa-lateral__ativa {
   background: var(--cor-lateral-selecionado-fundo);
-  box-shadow: inset 1px 0 0 var(--cor-lateral-selecionado-marcador);
   color: var(--cor-lateral-texto);
 }
 
@@ -783,6 +978,19 @@
   gap: var(--espaco-2);
 }
 
+/* Ajuda "Cadastre no Hub..." à esquerda e o botão "Abrir o Hub" à direita */
+.para-hub__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+}
+
+.para-hub__topo .campo__ajuda {
+  margin: 0;
+}
+
 .copiavel {
   display: grid;
   grid-template-columns: 100px minmax(0, 1fr) auto;
@@ -864,6 +1072,14 @@
 @media (max-width: 900px) {
   .busca__entrada {
     width: 100%;
+  }
+
+  .tabela__barra-direita {
+    width: 100%;
+  }
+
+  .filtro-categoria__entrada {
+    max-width: none;
   }
 
   .busca {

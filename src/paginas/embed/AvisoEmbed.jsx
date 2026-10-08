@@ -1,7 +1,7 @@
 // Mensagem do link de embed (carregando, em construção, sem acesso...). Fundo claro, porque
 // aparece dentro do Hub. Sem botão de portal: quem chega aqui é colaborador, não o time de dados.
 
-import logo from '../../assets/logo-unifecaf.png'
+import logo from '../../assets/logo1.png'
 import './AvisoEmbed.css'
 
 export default function AvisoEmbed({ titulo, texto, carregando = false }) {

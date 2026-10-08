@@ -5,7 +5,7 @@
 
 import { useState } from 'react'
 
-import logo from '../../../assets/logo-unifecaf.png'
+import logo from '../../../assets/logo1.png'
 
 let contador = 0
 

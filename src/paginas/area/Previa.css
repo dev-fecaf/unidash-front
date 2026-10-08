@@ -1,13 +1,122 @@
 .faixa-previa {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--espaco-3);
+  flex-direction: column;
   margin: calc(-1 * var(--espaco-5)) calc(-1 * var(--espaco-6)) var(--espaco-5);
   padding: var(--espaco-2) var(--espaco-6);
   background: var(--cor-superficie);
   border-bottom: 1px solid var(--cor-borda);
   font-size: var(--text-sm);
+}
+
+.faixa-previa__linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.faixa-previa__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+}
+
+/* "Onde editar": botão discreto com setinha que gira ao abrir */
+.faixa-previa__botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+}
+
+.faixa-previa__botao:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.faixa-previa__botao:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+.faixa-previa__seta {
+  display: inline-flex;
+  transform: rotate(90deg);
+  transition: transform 0.15s ease;
+}
+
+.faixa-previa__seta--aberta {
+  transform: rotate(-90deg);
+}
+
+/* Painel "Onde editar": rótulo à esquerda, valor + Copiar + nota à direita */
+.onde-editar {
+  display: grid;
+  gap: var(--espaco-2);
+  margin: var(--espaco-3) 0 var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  background: var(--cor-superficie-suave);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+}
+
+.onde-editar__linha {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--espaco-3);
+}
+
+.onde-editar__linha dt {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-suave);
+}
+
+.onde-editar__linha dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px var(--espaco-3);
+  margin: 0;
+  min-width: 0;
+}
+
+.onde-editar__linha code {
+  overflow-wrap: anywhere;
+  color: var(--cor-texto);
+}
+
+.onde-editar__copiar {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: var(--peso-medio);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.onde-editar__nota {
+  flex-basis: 100%;
+  color: var(--cor-texto-suave);
+}
+
+@media (max-width: 560px) {
+  .onde-editar__linha {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
 }
 
 .faixa-previa a {
@@ -29,12 +138,51 @@
   gap: var(--espaco-2) var(--espaco-3);
 }
 
-.faixa-previa__pasta {
+
+/* Dashboard sem pasta no front: aviso no meio da tela, com o comando */
+.sem-pasta {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--espaco-6) var(--espaco-4);
+  background: var(--cor-fundo);
+}
+
+.sem-pasta__caixa {
+  width: min(640px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-6);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+}
+
+.sem-pasta__caixa p {
+  margin: 0;
   color: var(--cor-texto-suave);
 }
 
-.faixa-previa__pasta code {
+.sem-pasta__caixa .onde-editar {
+  width: 100%;
+  margin: 0;
+}
+
+.sem-pasta__titulo {
+  margin: 0;
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-lh);
+}
+
+.sem-pasta__nota {
+  font-size: var(--text-xs);
+}
+
+.sem-pasta__caixa a {
   color: var(--cor-texto);
+  font-weight: var(--peso-medio);
 }
 
 .previa__mensagem {

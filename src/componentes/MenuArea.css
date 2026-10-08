@@ -32,35 +32,65 @@
   gap: var(--espaco-3);
 }
 
-/* Rodapé: Portal UniData, Sair e, por último, quem está logado */
+/* Rodapé: "Voltar ao portal UniData" e, embaixo, o cartão de quem está logado (o menu com Sair abre por cima dele) */
 .menu-area__rodape {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-1);
+  gap: var(--espaco-2);
 }
 
-.menu-area__usuario {
+/* ---- Cartão de quem está logado (CartaoUsuario.jsx) ---- */
+.usuario {
+  position: relative;
+}
+
+.usuario__cartao {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: var(--espaco-3); /* mesmo espaço entre ícone e texto das opções acima */
-  margin-top: var(--espaco-2);
-  padding: var(--espaco-3) var(--espaco-3) 0; /* mesmo recuo das opções acima */
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-md);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--cor-lateral-texto-suave);
-  min-width: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.menu-area__usuario > svg {
+.usuario__cartao:hover,
+.usuario__cartao--aberto {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.usuario__cartao > svg {
   flex-shrink: 0;
+  margin-left: auto;
 }
 
-.menu-area__identificacao {
+/* Iniciais num círculo branco */
+.usuario__avatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--cor-lateral-ativo-fundo);
+  font-size: var(--text-xs);
+  font-weight: var(--peso-semibold);
+  letter-spacing: 0.02em;
+}
+
+.usuario__identificacao {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.menu-area__nome {
+.usuario__nome {
   font-size: var(--text-sm);
   font-weight: var(--peso-semibold);
   color: var(--cor-lateral-texto);
@@ -69,7 +99,53 @@
   text-overflow: ellipsis;
 }
 
-.menu-area__perfil {
+.usuario__perfil {
   font-size: var(--text-xs);
   color: var(--cor-lateral-texto-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Menu branco que abre por cima do cartão */
+.usuario__menu {
+  position: absolute;
+  bottom: calc(100% + var(--espaco-2));
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: var(--espaco-2);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  box-shadow: 0 8px 24px rgba(11, 15, 26, 0.24);
+}
+
+.usuario__opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: 40px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: transparent;
+  color: var(--cor-texto);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--peso-medio);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.usuario__opcao:hover {
+  background: var(--cor-fundo);
+}
+
+/* Dentro do menu branco, o contorno de foco é escuro (o da barra é claro) */
+.lateral .usuario__opcao:focus-visible {
+  outline-color: var(--cor-foco);
+  outline-offset: -2px;
 }

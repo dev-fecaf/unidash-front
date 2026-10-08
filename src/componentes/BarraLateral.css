@@ -42,8 +42,8 @@
 
 .lateral__logo {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 26px; /* era 20px; aumentado com o logo novo (08/10/2026) */
+  height: 26px;
   display: block;
 }
 
@@ -129,15 +129,13 @@
   color: var(--cor-lateral-texto);
 }
 
-/* Página aberta: fundo #102E33 + faixa verde #00E375 à esquerda + peso médio.
-   O fundo sozinho quase não se distingue da lateral (1,2:1); a faixa verde (10,1:1)
-   é o que marca a página ativa. */
+/* Página aberta: fundo branco translúcido + texto branco em peso médio, sem borda
+   (a faixa à esquerda saiu em 08/10/2026, pedido da Letícia). */
 .lateral__pagina--ativa,
 .lateral__pagina--ativa:hover {
   background: var(--cor-lateral-selecionado-fundo);
   color: var(--cor-lateral-texto);
   font-weight: var(--peso-medio);
-  box-shadow: inset 1px 0 0 var(--cor-lateral-selecionado-marcador);
 }
 
 /* ---- Rodapé: Abrir chamado ---- */

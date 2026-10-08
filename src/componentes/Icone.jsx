@@ -98,6 +98,18 @@ const DESENHOS = {
     </>
   ),
   portal: <path d="M14 6l-6 6 6 6" />,
+  'seta-cima': (
+    <>
+      <path d="M12 19V5" />
+      <path d="M6 11l6-6 6 6" />
+    </>
+  ),
+  'seta-baixo': (
+    <>
+      <path d="M12 5v14" />
+      <path d="M6 13l6 6 6-6" />
+    </>
+  ),
   sair: (
     <>
       <path d="M14 4h5v16h-5" />

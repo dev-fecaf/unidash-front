@@ -4,6 +4,7 @@
 
 export default {
   hash: 'exemplo',
+  soNoComputador: true, // sem cadastro no banco: a pré-visualização usa esta configuração direto
   nome: 'Dashboard de exemplo',
   paginas: [
     { codigo: 'visao-geral', nome: 'Visão geral' },

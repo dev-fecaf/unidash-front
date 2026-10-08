@@ -9,5 +9,9 @@ export const LINK_CHAMADO = import.meta.env.VITE_LINK_CHAMADO || null
 // Ex.: https://unifecaf-hub-hml.app.unifecaf.edu.br · no computador, com o Hub simulado: http://localhost:5174
 export const EMBED_HUB_ORIGIN = import.meta.env.VITE_EMBED_HUB_ORIGIN || null
 
+// Endereço do Hub para o botão "Abrir o Hub" do Gerador (cadastrar o dashboard lá).
+// hml: https://unifecaf-hub-hml.app.unifecaf.edu.br · Sem ela, usa a origem do Hub (acima); sem as duas, o botão some.
+export const HUB_URL = import.meta.env.VITE_HUB_URL || EMBED_HUB_ORIGIN
+
 // Endereço do portal UniData (link "Voltar ao portal" quando a entrada falha).
 export const PORTAL_URL = import.meta.env.VITE_PORTAL_URL || null
